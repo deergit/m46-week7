@@ -28,4 +28,10 @@ app.get("/anotherroute", (request, response) => {
   response.send("Hello from another route");
 })
 
+app.post("/book", (request, response) => {
+  console.log(request.body);
+
+  response.send("Data received");
+})
+
 app.listen(5001, () => console.log("Listen server open"));
