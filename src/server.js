@@ -7,7 +7,7 @@ const app = express();
 // app.use("/books", express.static("books"));
 // app.use("/", express.static("anotherRoute"));
 
-app.use(express.json)
+app.use(express.json())
 
 app.get("/book", (request, response) => {
   response.send("Hello from the book route");
