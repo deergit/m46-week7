@@ -1,12 +1,6 @@
 const express = require("express");
 const app = express();
 
-// app.use("/music", express.static("music"));
-// app.use("/music/about", express.static("music/about.html"));
-// app.use("/music/my-music", express.static("music/mymusic.html"));
-// app.use("/books", express.static("books"));
-// app.use("/", express.static("anotherRoute"));
-
 let bookList = [{
   id: 1,
   title: "Lord of the Rings",
