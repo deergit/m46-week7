@@ -6,7 +6,7 @@ let bookList = [{
   title: "Lord of the Rings",
   author: "J.R.R. Tolkein",
   genre: "Fantasy"
-}]
+}];
 
 app.use(express.json());
 
