@@ -1,9 +1,3 @@
-// Book:
-//     _id: string
-//     title: string
-//     author: string
-//     genre: string
-
 const mongoose = require("mongoose");
 
 const bookSchema = new mongoose.Schema({
