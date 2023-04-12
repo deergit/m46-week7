@@ -24,24 +24,24 @@ DB
 
 Book:
     _id: string
-    title: string   
+    title: string
     author: string
     genre: string
 
 Request
 
-Body: 
+Body:
     type: object
     properties:
-        title: string   
-        author: string  
+        title: string
+        author: string
         genre: string
 
 Response
 
 SuccessResponse:
-    type: object  
-    status: 201  
+    type: object
+    status: 201
     properties:
         message:
             type: string
@@ -50,17 +50,6 @@ SuccessResponse:
             type: object
             properties:
                 title: string
-                author: string  
+                author: string
                 genre: string
                 _id: string
-
-
-const newUser = await Book.make(req.body)
-const successResponse = {message: "success", newUser: newUser}
-
-res.status(201).json(successResponse)
-
-
-
-
-

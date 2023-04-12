@@ -1,68 +1,66 @@
 const express = require("express");
 const app = express();
+const Book = require("./modbooks/model");
 require("dotenv").config();
 require("./db/connection");
 
-let bookList = [{
-  id: 1,
-  title: "Lord of the Rings",
-  author: "J.R.R. Tolkein",
-  genre: "Fantasy"
-}];
-
 app.use(express.json());
+app.use("/books", express.static("books"));
 
-app.get("/books", (request, response) => {
+app.get("/books/getallbooks", (req, res) => {
   const successResponse = {
     message: "Response sent successfully",
     books: bookList
   }
 
-  response.send(successResponse);
+  res.send(successResponse);
 });
 
-app.post("/books", (request, response) => {
-  const newBook = {
-    id: bookList.length + 1,
-    title: request.body.title,
-    author: request.body.author,
-    genre: request.body.genre
+app.post("/books/addbook", async (req, res) => {
+  const newBook = await Book.create({
+    title: req.body.title,
+    author: req.body.author,
+    genre: req.body.genre
+  });
+
+  const successResponse = {
+    message: "success",
+    newBook: newBook
   }
 
-  bookList.push(newBook);
-  response.send("Data received");
+  res.status(201).json(successResponse);
 });
 
-app.put("/books/:id", (request, response) => {
-  const match = bookList.find(book => book.id === parseInt(request.params.id));
+app.put("/books/:id", (req, res) => {
+  const match = bookList.find(book => book.id === parseInt(req.params.id));
 
   if (match) {
     const updateBook = {
       id: match.id,
-      title: request.body.title,
-      author: request.body.author,
-      genre: request.body.genre
+      title: req.body.title,
+      author: req.body.author,
+      genre: req.body.genre
     }
 
     match.title = updateBook.title ?? match.title;
     match.author = updateBook.author ?? match.author;
     match.genre = updateBook.genre ?? match.genre;
 
-    response.send("Entry updated");
+    res.send("Entry updated");
   } else {
-    response.sendStatus(400);
+    res.sendStatus(400);
   }
 });
 
-app.delete("/books/:id", (request, response) => {
-  const match = bookList.find(book => book.id === parseInt(request.params.id));
+app.delete("/books/:id", (req, res) => {
+  const match = bookList.find(book => book.id === parseInt(req.params.id));
 
   if (match) {
     bookList = bookList.filter(book => book.id !== match.id);
-    response.send("Entry deleted");
+    res.send("Entry deleted");
   } else {
-    response.sendStatus(400);
+    res.sendStatus(400);
   }
 });
 
-app.listen(5001, () => console.log("Listen server open"));
+app.listen(5001, () => console.log("Listen server open on port 5001"));
