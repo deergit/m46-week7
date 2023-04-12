@@ -1,34 +1,42 @@
-const express = require("express");
-const app = express();
-const Book = require("./modbooks/model");
 require("dotenv").config();
 require("./db/connection");
 
-app.use(express.json());
-app.use("/books", express.static("books"));
+const express = require("express");
 
-app.get("/books/getallbooks", (req, res) => {
+const Book = require("./modbooks/model");
+
+const app = express();
+
+app.use(express.json());
+
+app.get("/books/getallbooks", async (req, res) => {
+  const bookList = await Book.find({});
+  
   const successResponse = {
-    message: "Response sent successfully",
+    message: "success",
     books: bookList
   }
 
-  res.send(successResponse);
+  res.status(200).json(successResponse);
 });
 
 app.post("/books/addbook", async (req, res) => {
-  const newBook = await Book.create({
-    title: req.body.title,
-    author: req.body.author,
-    genre: req.body.genre
-  });
+  try {
+    const newBook = await Book.create({
+      title: req.body.title,
+      author: req.body.author,
+      genre: req.body.genre
+    });
 
-  const successResponse = {
-    message: "success",
-    newBook: newBook
+    const successResponse = {
+      message: "success",
+      newBook: newBook
+    }
+
+    res.status(201).json(successResponse);
+  } catch (error) {
+    console.log(error);
   }
-
-  res.status(201).json(successResponse);
 });
 
 app.put("/books/:id", (req, res) => {

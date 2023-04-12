@@ -6,7 +6,7 @@ What do we want a user to be able to do?
 
 1. Input book title
 2. Delete the book
-3. Recieve confirmation that the book has bee deleted
+3. Recieve confirmation that the book has been deleted
 
 Endpoint/route
 
