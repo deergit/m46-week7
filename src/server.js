@@ -42,9 +42,9 @@ app.put("/books/:id", (request, response) => {
       genre: request.body.genre
     }
 
-    match.title = updateBook.title ? updateBook.title : match.title;
-    match.author = updateBook.author ? updateBook.author : match.author;
-    match.genre = updateBook.genre ? updateBook.genre : match.genre;
+    match.title = updateBook.title ?? match.title;
+    match.author = updateBook.author ?? match.author;
+    match.genre = updateBook.genre ?? match.genre;
 
     response.send("Entry updated");
   } else {
