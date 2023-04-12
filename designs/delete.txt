@@ -21,23 +21,23 @@ Data Requirements
 DB
 
 Book:
-    id: integer 
-    title: string   
+    id: integer
+    title: string
     author: string
     genre: string
 
 Request
 
-Body: 
+Body:
     type: object
     properties:
-        title: string   
+        title: string
 
 Response
 
 SuccessResponse:
-    type: object  
-    status: 201  
+    type: object
+    status: 201
     properties:
         message:
             type: string

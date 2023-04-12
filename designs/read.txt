@@ -19,8 +19,8 @@ Data Requirements
 DB
 
 Book:
-    id: integer 
-    title: string   
+    id: integer
+    title: string
     author: string
     genre: string
 
@@ -31,8 +31,8 @@ Body: N/A
 Response
 
 SuccessResponse:
-    type: object  
-    status: 200  
+    type: object
+    status: 200
     properties:
         message:
             type: string
@@ -42,9 +42,9 @@ SuccessResponse:
             items:
                 book:
                     properties:
-                        _id: string 
-                        title: string   
+                        _id: string
+                        title: string
                         author: string
-                        genre: string 
+                        genre: string
                         __v: integer
 

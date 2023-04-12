@@ -21,22 +21,22 @@ Data Requirements
 DB
 
 Book:
-    id: integer 
-    title: string   
+    id: integer
+    title: string
     author: string
     genre: string
 
 Request
 
-Body: 
+Body:
     type: object
     properties:
-        title: string   
-        newAuthor: string  
+        title: string
+        newAuthor: string
 
-SuccessResponse: 
-    type: object  
-    status: 201  
+SuccessResponse:
+    type: object
+    status: 201
     properties:
         message:
             type: string
@@ -45,10 +45,9 @@ SuccessResponse:
             type: object
             properties:
                 title: string
-                author: string  
+                author: string
                 genre: string
 
 
 
 
-                
