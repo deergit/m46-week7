@@ -54,33 +54,55 @@ app.put("/books/updatebookauthor", async (req, res) => {
   }
 });
 
-app.put("/books/", (req, res) => {
-  const match = Book.find({ title: req.body.title })
-
-  if (match) {
-    const updateBook = {
-      title: req.body.title,
-      author: req.body.author,
-      genre: req.body.genre
+app.put("/books/updatebook", async (req, res) => {
+  try {
+    const match = await Book.findOne({ title: req.query.title });
+    const updatedBook = {
+      _id: match.id,
+      title: req.body.title ?? match.title,
+      author: req.body.author ?? match.author,
+      genre: req.body.genre ?? match.genre,
+      __v: match.__v
     }
 
-    match.title = updateBook.title ?? match.title;
-    match.author = updateBook.author ?? match.author;
-    match.genre = updateBook.genre ?? match.genre;
+    await Book.replaceOne(match, updatedBook, { upsert: false });
 
-    res.send("Entry updated");
-  } else {
+    const successResponse = {
+      message: "success",
+      updatedBook: updatedBook
+    }
+
+    res.status(201).json(successResponse);
+  } catch {
     res.sendStatus(400);
   }
 });
 
-app.delete("/books/deletebook", (req, res) => {
-  const match = bookList.find(book => book.id === parseInt(req.params.id));
+app.delete("/books/deletebook", async (req, res) => {
+  try {
+    const deletedBook = await Book.findOneAndDelete({ title: req.query.title });
 
-  if (match) {
-    bookList = bookList.filter(book => book.id !== match.id);
-    res.send("Entry deleted");
-  } else {
+    const successResponse = {
+      message: "successfully deleted",
+      deletedBook: deletedBook
+    }
+
+    res.status(201).json(successResponse);
+  } catch {
+    res.sendStatus(400);
+  }
+});
+
+app.delete("/books/deleteallbooks", async (req, res) => {
+  try {
+    await Book.deleteMany({});
+
+    const successResponse = {
+      message: "successfully deleted all books"
+    }
+
+    res.status(201).json(successResponse);
+  } catch {
     res.sendStatus(400);
   }
 });
