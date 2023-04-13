@@ -9,13 +9,20 @@ const addBook = async (req, res) => {
     });
 
     const successResponse = {
-      status: 200,
-      newBook: newBook
+      status: 201,
+      properties: {
+        newBook: newBook
+      }
     }
 
     return successResponse
   } catch (error) {
-    return 400;
+    return {
+      status: 400,
+      properties: {
+        error: "could not perform operation"
+      }
+    }
   }
 }
 

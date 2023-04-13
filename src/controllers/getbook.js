@@ -15,10 +15,20 @@ const getBook = async (req, res) => {
 
       return successResponse;
     } else {
-      return 404;
+      return {
+        status: 404,
+        properties: {
+          error: "could not find entry"
+        }
+      }
     }
   } catch (error) {
-    return 400;
+    return {
+      status: 400,
+      properties: {
+        error: "could not perform operation"
+      }
+    }
   }
 }
 

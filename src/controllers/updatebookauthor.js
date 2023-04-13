@@ -4,14 +4,31 @@ const updateBookAuthor = async (req, res) => {
   try {
     const updatedBook = await Book.findOneAndUpdate({ title: req.body.title }, { $set: { author: req.body.author }}, { new: true });
 
-    const successResponse = {
-      status: 200,
-      updatedBook: updatedBook
-    }
+    if (updatedBook) {
+      const successResponse = {
+        status: 201,
+        properties: {
+          message: "success",
+          updatedBook: updatedBook
+        }
+      }
 
-    return successResponse
+      return successResponse;
+    } else {
+      return {
+        status: 404,
+        properties: {
+          error: "could not find entry"
+        }
+      }
+    }
   } catch (error) {
-    return 400;
+    return {
+      status: 400,
+      properties: {
+        error: "could not perform operation"
+      }
+    }
   }
 }
 

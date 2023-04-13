@@ -6,12 +6,19 @@ const getAllBooks = async (req, res) => {
     
     const successResponse = {
       status: 200,
-      books: bookList
+      properties: {
+        books: bookList
+      }
     }
 
     return successResponse;
   } catch (error) {
-    return 400;
+    return {
+      status: 400,
+      properties: {
+        error: "could not perform operation"
+      }
+    }
   }
 }
 
