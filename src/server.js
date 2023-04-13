@@ -10,14 +10,18 @@ const app = express();
 app.use(express.json());
 
 app.get("/books/getallbooks", async (req, res) => {
-  const bookList = await Book.find({});
-  
-  const successResponse = {
-    message: "success",
-    books: bookList
-  }
+  try {
+    const bookList = await Book.find({});
+    
+    const successResponse = {
+      message: "success",
+      books: bookList
+    }
 
-  res.status(200).json(successResponse);
+    res.status(200).json(successResponse);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.post("/books/addbook", async (req, res) => {
