@@ -39,12 +39,26 @@ app.post("/books/addbook", async (req, res) => {
   }
 });
 
-app.put("/books/:id", (req, res) => {
-  const match = bookList.find(book => book.id === parseInt(req.params.id));
+app.put("/books/updatebookauthor", async (req, res) => {
+  try {
+    const updatedBook = await Book.findOneAndUpdate({ title: req.body.title }, { $set: { author: req.body.author }}, { new: true });
+
+    const successResponse = {
+      message: "success",
+      updatedBook: updatedBook
+    }
+
+    res.status(201).json(successResponse);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.put("/books/", (req, res) => {
+  const match = Book.find({ title: req.body.title })
 
   if (match) {
     const updateBook = {
-      id: match.id,
       title: req.body.title,
       author: req.body.author,
       genre: req.body.genre
@@ -60,7 +74,7 @@ app.put("/books/:id", (req, res) => {
   }
 });
 
-app.delete("/books/:id", (req, res) => {
+app.delete("/books/deletebook", (req, res) => {
   const match = bookList.find(book => book.id === parseInt(req.params.id));
 
   if (match) {
