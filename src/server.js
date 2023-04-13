@@ -2,6 +2,7 @@ require("dotenv").config();
 require("./db/connection");
 
 const express = require("express");
+const ctrl = require("./controllers/controller")
 
 const Book = require("./modbooks/model");
 
@@ -10,18 +11,7 @@ const app = express();
 app.use(express.json());
 
 app.get("/books/getallbooks", async (req, res) => {
-  try {
-    const bookList = await Book.find({});
-    
-    const successResponse = {
-      message: "success",
-      books: bookList
-    }
-
-    res.status(200).json(successResponse);
-  } catch (error) {
-    console.log(error);
-  }
+  res.send(ctrl.getallbooks(req, res));
 });
 
 app.get("/books/getbook", async (req, res) => {
@@ -35,7 +25,7 @@ app.get("/books/getbook", async (req, res) => {
 
     res.status(200).json(successResponse);
   } catch (error) {
-    console.log(error);
+    res.sendStatus(400);
   }
 });
 
@@ -54,7 +44,7 @@ app.post("/books/addbook", async (req, res) => {
 
     res.status(201).json(successResponse);
   } catch (error) {
-    console.log(error);
+    res.sendStatus(400);
   }
 });
 
@@ -69,7 +59,7 @@ app.put("/books/updatebookauthor", async (req, res) => {
 
     res.status(201).json(successResponse);
   } catch (error) {
-    console.log(error);
+    res.sendStatus(400);
   }
 });
 
