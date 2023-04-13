@@ -8,7 +8,7 @@ const deleteAllBooks = async (req, res) => {
       message: "successfully deleted all books"
     }
 
-    res.status(201).json(successResponse);
+    return successResponse
   } catch {
     res.sendStatus(400);
   }

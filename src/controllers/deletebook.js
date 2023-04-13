@@ -9,7 +9,7 @@ const deleteBook = async (req, res) => {
       deletedBook: deletedBook
     }
 
-    res.status(201).json(successResponse);
+    return successResponse
   } catch {
     res.sendStatus(400);
   }

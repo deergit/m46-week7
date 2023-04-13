@@ -9,7 +9,7 @@ const updateBookAuthor = async (req, res) => {
       updatedBook: updatedBook
     }
 
-    res.status(201).json(successResponse);
+    return successResponse
   } catch (error) {
     return 400;
   }

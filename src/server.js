@@ -4,116 +4,43 @@ require("./db/connection");
 const express = require("express");
 const ctrl = require("./controllers/controller")
 
-const Book = require("./modbooks/model");
-
 const app = express();
 
 app.use(express.json());
 
 app.get("/books/getallbooks", async (req, res) => {
-  res.send(ctrl.getallbooks(req, res));
+  const response = await ctrl.getallbooks(req, res);
+  res.send(response);
 });
 
 app.get("/books/getbook", async (req, res) => {
-  try {
-    const book = await Book.findOne({ title: req.query.title });
-    
-    const successResponse = {
-      message: "success",
-      book: book
-    }
-
-    res.status(200).json(successResponse);
-  } catch (error) {
-    res.sendStatus(400);
-  }
+  const response = await ctrl.getbook(req, res);
+  res.send(response);
 });
 
 app.post("/books/addbook", async (req, res) => {
-  try {
-    const newBook = await Book.create({
-      title: req.body.title,
-      author: req.body.author,
-      genre: req.body.genre
-    });
-
-    const successResponse = {
-      message: "success",
-      newBook: newBook
-    }
-
-    res.status(201).json(successResponse);
-  } catch (error) {
-    res.sendStatus(400);
-  }
+  const response = await ctrl.addbook(req, res);
+  res.send(response);
 });
 
 app.put("/books/updatebookauthor", async (req, res) => {
-  try {
-    const updatedBook = await Book.findOneAndUpdate({ title: req.body.title }, { $set: { author: req.body.author }}, { new: true });
-
-    const successResponse = {
-      message: "success",
-      updatedBook: updatedBook
-    }
-
-    res.status(201).json(successResponse);
-  } catch (error) {
-    res.sendStatus(400);
-  }
+  const response = await ctrl.updatebookauthor(req, res);
+  res.send(response);
 });
 
 app.put("/books/updatebook", async (req, res) => {
-  try {
-    const match = await Book.findOne({ title: req.query.title });
-    const updatedBook = {
-      _id: match.id,
-      title: req.body.title ?? match.title,
-      author: req.body.author ?? match.author,
-      genre: req.body.genre ?? match.genre,
-      __v: match.__v
-    }
-
-    await Book.replaceOne(match, updatedBook, { upsert: false });
-
-    const successResponse = {
-      message: "success",
-      updatedBook: updatedBook
-    }
-
-    res.status(201).json(successResponse);
-  } catch {
-    res.sendStatus(400);
-  }
+  const response = await ctrl.updatebook(req, res);
+  res.send(response);
 });
 
 app.delete("/books/deletebook", async (req, res) => {
-  try {
-    const deletedBook = await Book.findOneAndDelete({ title: req.query.title });
-
-    const successResponse = {
-      message: "successfully deleted",
-      deletedBook: deletedBook
-    }
-
-    res.status(201).json(successResponse);
-  } catch {
-    res.sendStatus(400);
-  }
+  const response = await ctrl.deletebook(req, res);
+  res.send(response);
 });
 
 app.delete("/books/deleteallbooks", async (req, res) => {
-  try {
-    await Book.deleteMany({});
-
-    const successResponse = {
-      message: "successfully deleted all books"
-    }
-
-    res.status(201).json(successResponse);
-  } catch {
-    res.sendStatus(400);
-  }
+  const response = await ctrl.deleteallbooks(req, res);
+  res.send(response);
 });
 
 app.listen(5001, () => console.log("Listen server open on port 5001"));

@@ -18,7 +18,7 @@ const updateBook = async (req, res) => {
       updatedBook: updatedBook
     }
 
-    res.status(201).json(successResponse);
+    return successResponse
   } catch {
     res.sendStatus(400);
   }

@@ -13,7 +13,7 @@ const addBook = async (req, res) => {
       newBook: newBook
     }
 
-    res.status(201).json(successResponse);
+    return successResponse
   } catch (error) {
     return 400;
   }
