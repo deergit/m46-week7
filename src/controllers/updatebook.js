@@ -14,13 +14,13 @@ const updateBook = async (req, res) => {
     await Book.replaceOne(match, updatedBook, { upsert: false });
 
     const successResponse = {
-      message: "success",
+      status: 200,
       updatedBook: updatedBook
     }
 
     return successResponse
   } catch {
-    res.sendStatus(400);
+    return 400
   }
 }
 

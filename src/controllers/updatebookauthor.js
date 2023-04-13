@@ -5,7 +5,7 @@ const updateBookAuthor = async (req, res) => {
     const updatedBook = await Book.findOneAndUpdate({ title: req.body.title }, { $set: { author: req.body.author }}, { new: true });
 
     const successResponse = {
-      message: "success",
+      status: 200,
       updatedBook: updatedBook
     }
 

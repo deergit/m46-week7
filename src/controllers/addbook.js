@@ -9,7 +9,7 @@ const addBook = async (req, res) => {
     });
 
     const successResponse = {
-      message: "success",
+      status: 200,
       newBook: newBook
     }
 

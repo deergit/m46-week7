@@ -4,12 +4,19 @@ const getBook = async (req, res) => {
   try {
     const book = await Book.findOne({ title: req.query.title });
     
-    const successResponse = {
-      message: "success",
-      book: book
-    }
+    if (book) {
+      const successResponse = {
+        status: 200,
+        properties: {
+          message: "success",
+          book: book
+        }
+      }
 
-    res.status(200).json(successResponse);
+      return successResponse;
+    } else {
+      return 404;
+    }
   } catch (error) {
     return 400;
   }

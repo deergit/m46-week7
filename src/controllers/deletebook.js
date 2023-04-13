@@ -5,13 +5,13 @@ const deleteBook = async (req, res) => {
     const deletedBook = await Book.findOneAndDelete({ title: req.query.title });
 
     const successResponse = {
-      message: "successfully deleted",
+      status: 200,
       deletedBook: deletedBook
     }
 
     return successResponse
   } catch {
-    res.sendStatus(400);
+    return 400
   }
 }
 

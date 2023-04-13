@@ -5,7 +5,7 @@ const getAllBooks = async (req, res) => {
     const bookList = await Book.find({});
     
     const successResponse = {
-      message: "success",
+      status: 200,
       books: bookList
     }
 

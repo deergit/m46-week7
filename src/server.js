@@ -10,37 +10,37 @@ app.use(express.json());
 
 app.get("/books/getallbooks", async (req, res) => {
   const response = await ctrl.getallbooks(req, res);
-  res.send(response);
+  parseInt(response) ? res.sendStatus(response) : res.sendStatus(response.status).json(response.properties);
 });
 
 app.get("/books/getbook", async (req, res) => {
   const response = await ctrl.getbook(req, res);
-  res.send(response);
+  parseInt(response) ? res.sendStatus(response) : res.sendStatus(response.status).json(response.properties);
 });
 
 app.post("/books/addbook", async (req, res) => {
   const response = await ctrl.addbook(req, res);
-  res.send(response);
+  parseInt(response) ? res.sendStatus(response) : res.sendStatus(response.status).json(response.properties);
 });
 
 app.put("/books/updatebookauthor", async (req, res) => {
   const response = await ctrl.updatebookauthor(req, res);
-  res.send(response);
+  parseInt(response) ? res.sendStatus(response) : res.sendStatus(response.status).json(response.properties);
 });
 
 app.put("/books/updatebook", async (req, res) => {
   const response = await ctrl.updatebook(req, res);
-  res.send(response);
+  parseInt(response) ? res.sendStatus(response) : res.sendStatus(response.status).json(response.properties);
 });
 
 app.delete("/books/deletebook", async (req, res) => {
   const response = await ctrl.deletebook(req, res);
-  res.send(response);
+  parseInt(response) ? res.sendStatus(response) : res.sendStatus(response.status).json(response.properties);
 });
 
 app.delete("/books/deleteallbooks", async (req, res) => {
   const response = await ctrl.deleteallbooks(req, res);
-  res.send(response);
+  parseInt(response) ? res.sendStatus(response) : res.sendStatus(response.status).json(response.properties);
 });
 
 app.listen(5001, () => console.log("Listen server open on port 5001"));

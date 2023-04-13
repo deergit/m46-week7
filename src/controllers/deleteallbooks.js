@@ -5,12 +5,12 @@ const deleteAllBooks = async (req, res) => {
     await Book.deleteMany({});
 
     const successResponse = {
-      message: "successfully deleted all books"
+      status: 200,
     }
 
     return successResponse
   } catch {
-    res.sendStatus(400);
+    return 400
   }
 }
 
