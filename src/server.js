@@ -24,6 +24,21 @@ app.get("/books/getallbooks", async (req, res) => {
   }
 });
 
+app.get("/books/getbook", async (req, res) => {
+  try {
+    const book = await Book.findOne({ title: req.query.title });
+    
+    const successResponse = {
+      message: "success",
+      book: book
+    }
+
+    res.status(200).json(successResponse);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 app.post("/books/addbook", async (req, res) => {
   try {
     const newBook = await Book.create({
