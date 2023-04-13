@@ -1,66 +1,110 @@
-const express = require("express");
-const app = express();
+require("dotenv").config();
+require("./db/connection");
 
-let bookList = [{
-  id: 1,
-  title: "Lord of the Rings",
-  author: "J.R.R. Tolkein",
-  genre: "Fantasy"
-}];
+const express = require("express");
+
+const Book = require("./modbooks/model");
+
+const app = express();
 
 app.use(express.json());
 
-app.get("/books", (request, response) => {
+app.get("/books/getallbooks", async (req, res) => {
+  const bookList = await Book.find({});
+  
   const successResponse = {
-    message: "Response sent successfully",
+    message: "success",
     books: bookList
   }
 
-  response.send(successResponse);
+  res.status(200).json(successResponse);
 });
 
-app.post("/books", (request, response) => {
-  const newBook = {
-    id: bookList.length + 1,
-    title: request.body.title,
-    author: request.body.author,
-    genre: request.body.genre
-  }
+app.post("/books/addbook", async (req, res) => {
+  try {
+    const newBook = await Book.create({
+      title: req.body.title,
+      author: req.body.author,
+      genre: req.body.genre
+    });
 
-  bookList.push(newBook);
-  response.send("Data received");
-});
-
-app.put("/books/:id", (request, response) => {
-  const match = bookList.find(book => book.id === parseInt(request.params.id));
-
-  if (match) {
-    const updateBook = {
-      id: match.id,
-      title: request.body.title,
-      author: request.body.author,
-      genre: request.body.genre
+    const successResponse = {
+      message: "success",
+      newBook: newBook
     }
 
-    match.title = updateBook.title ?? match.title;
-    match.author = updateBook.author ?? match.author;
-    match.genre = updateBook.genre ?? match.genre;
-
-    response.send("Entry updated");
-  } else {
-    response.sendStatus(400);
+    res.status(201).json(successResponse);
+  } catch (error) {
+    console.log(error);
   }
 });
 
-app.delete("/books/:id", (request, response) => {
-  const match = bookList.find(book => book.id === parseInt(request.params.id));
+app.put("/books/updatebookauthor", async (req, res) => {
+  try {
+    const updatedBook = await Book.findOneAndUpdate({ title: req.body.title }, { $set: { author: req.body.author }}, { new: true });
 
-  if (match) {
-    bookList = bookList.filter(book => book.id !== match.id);
-    response.send("Entry deleted");
-  } else {
-    response.sendStatus(400);
+    const successResponse = {
+      message: "success",
+      updatedBook: updatedBook
+    }
+
+    res.status(201).json(successResponse);
+  } catch (error) {
+    console.log(error);
   }
 });
 
-app.listen(5001, () => console.log("Listen server open"));
+app.put("/books/updatebook", async (req, res) => {
+  try {
+    const match = await Book.findOne({ title: req.query.title });
+    const updatedBook = {
+      _id: match.id,
+      title: req.body.title ?? match.title,
+      author: req.body.author ?? match.author,
+      genre: req.body.genre ?? match.genre,
+      __v: match.__v
+    }
+
+    await Book.replaceOne(match, updatedBook, { upsert: false });
+
+    const successResponse = {
+      message: "success",
+      updatedBook: updatedBook
+    }
+
+    res.status(201).json(successResponse);
+  } catch {
+    res.sendStatus(400);
+  }
+});
+
+app.delete("/books/deletebook", async (req, res) => {
+  try {
+    const deletedBook = await Book.findOneAndDelete({ title: req.query.title });
+
+    const successResponse = {
+      message: "successfully deleted",
+      deletedBook: deletedBook
+    }
+
+    res.status(201).json(successResponse);
+  } catch {
+    res.sendStatus(400);
+  }
+});
+
+app.delete("/books/deleteallbooks", async (req, res) => {
+  try {
+    await Book.deleteMany({});
+
+    const successResponse = {
+      message: "successfully deleted all books"
+    }
+
+    res.status(201).json(successResponse);
+  } catch {
+    res.sendStatus(400);
+  }
+});
+
+app.listen(5001, () => console.log("Listen server open on port 5001"));
