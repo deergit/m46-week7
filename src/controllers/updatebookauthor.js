@@ -1,6 +1,6 @@
 const Book = require("../modbooks/model");
 
-const updateBookAuthor = async (req, res) => {
+const updateBookAuthor = async (req) => {
   try {
     const updatedBook = await Book.findOneAndUpdate({ title: req.body.title }, { $set: { author: req.body.author }}, { new: true });
 

@@ -1,6 +1,6 @@
 const Book = require("../modbooks/model");
 
-const deleteAllBooks = async (req, res) => {
+const deleteAllBooks = async (req) => {
   try {
     await Book.deleteMany({});
 

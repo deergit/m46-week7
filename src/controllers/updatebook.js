@@ -1,6 +1,6 @@
 const Book = require("../modbooks/model");
 
-const updateBook = async (req, res) => {
+const updateBook = async (req) => {
   try {
     const match = await Book.findOne({ title: req.query.title });
     if (match) {

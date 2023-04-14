@@ -1,6 +1,6 @@
 const Book = require("../modbooks/model");
 
-const addBook = async (req, res) => {
+const addBook = async (req) => {
   try {
     const newBook = await Book.create({
       title: req.body.title,
@@ -11,6 +11,7 @@ const addBook = async (req, res) => {
     const successResponse = {
       status: 201,
       properties: {
+        message: "book successfully added",
         newBook: newBook
       }
     }

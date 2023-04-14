@@ -1,12 +1,13 @@
 const Book = require("../modbooks/model");
 
-const getAllBooks = async (req, res) => {
+const getAllBooks = async (req) => {
   try {
     const bookList = await Book.find({});
     
     const successResponse = {
       status: 200,
       properties: {
+        message: "success",
         books: bookList
       }
     }

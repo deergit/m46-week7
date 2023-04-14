@@ -1,8 +1,8 @@
 const Book = require("../modbooks/model");
 
-const getBook = async (req, res) => {
+const getBook = async (req) => {
   try {
-    const book = await Book.findOne({ title: req.query.title });
+    const book = await Book.findOne({ title: req.body.title });
     
     if (book) {
       const successResponse = {

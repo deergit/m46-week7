@@ -1,8 +1,8 @@
 const Book = require("../modbooks/model");
 
-const deleteBook = async (req, res) => {
+const deleteBook = async (req) => {
   try {
-    const deletedBook = await Book.findOneAndDelete({ title: req.query.title });
+    const deletedBook = await Book.findOneAndDelete({ title: req.body.title });
 
     if (deletedBook) {
       const successResponse = {
