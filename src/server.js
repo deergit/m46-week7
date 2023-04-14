@@ -28,6 +28,11 @@ app.put("/books/updatebookauthor", async (req, res) => {
   parseInt(response) ? res.status(response) : res.status(response.status).json(response.properties);
 });
 
+app.put("/books/updatebookmichael", async (req, res) => {
+  const response = await ctrl.updatebookmichael(req);
+  parseInt(response) ? res.status(response) : res.status(response.status).json(response.properties);
+});
+
 app.put("/books/updatebook", async (req, res) => {
   const response = await ctrl.updatebook(req);
   parseInt(response) ? res.status(response) : res.status(response.status).json(response.properties);
