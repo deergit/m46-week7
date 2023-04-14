@@ -1,46 +1,22 @@
 const { Router } = require("express");
 const bookRouter = Router();
 
-const ctrl = require("../controllers/controller");
+const ctrl = require("./controllers/controller");
 
-bookRouter.get("/books/getallbooks", async (req, res) => {
-  const response = await ctrl.getallbooks();
-  parseInt(response) ? res.status(response) : res.status(response.status).json(response.properties);
-});
+bookRouter.get("/books/getallbooks", ctrl.getallbooks);
 
-bookRouter.get("/books/getbook", async (req, res) => {
-  const response = await ctrl.getbook(req);
-  parseInt(response) ? res.status(response) : res.status(response.status).json(response.properties);
-});
+bookRouter.get("/books/getbook", ctrl.getbook);
 
-bookRouter.post("/books/addbook", async (req, res) => {
-  const response = await ctrl.addbook(req);
-  parseInt(response) ? res.status(response) : res.status(response.status).json(response.properties);
-});
+bookRouter.post("/books/addbook", ctrl.addbook);
 
-bookRouter.put("/books/updatebookauthor", async (req, res) => {
-  const response = await ctrl.updatebookauthor(req);
-  parseInt(response) ? res.status(response) : res.status(response.status).json(response.properties);
-});
+bookRouter.put("/books/updatebookauthor", ctrl.updatebookauthor);
 
-bookRouter.put("/books/updatebookmichael", async (req, res) => {
-  const response = await ctrl.updatebookmichael(req);
-  parseInt(response) ? res.status(response) : res.status(response.status).json(response.properties);
-});
+bookRouter.put("/books/updatebookmichael", ctrl.updatebookmichael);
 
-bookRouter.put("/books/updatebook", async (req, res) => {
-  const response = await ctrl.updatebook(req);
-  parseInt(response) ? res.status(response) : res.status(response.status).json(response.properties);
-});
+bookRouter.put("/books/updatebook", ctrl.updatebook);
 
-bookRouter.delete("/books/deletebook", async (req, res) => {
-  const response = await ctrl.deletebook(req);
-  parseInt(response) ? res.status(response) : res.status(response.status).json(response.properties);
-});
+bookRouter.delete("/books/deletebook", ctrl.deletebook);
 
-bookRouter.delete("/books/deleteallbooks", async (req, res) => {
-  const response = await ctrl.deleteallbooks();
-  parseInt(response) ? res.status(response) : res.status(response.status).json(response.properties);
-});
+bookRouter.delete("/books/deleteallbooks", ctrl.deleteallbooks);
 
 module.exports = bookRouter;

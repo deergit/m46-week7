@@ -1,6 +1,7 @@
-const Book = require("../modbooks/model");
+const Book = require("../model");
 
-const addBook = async (req) => {
+const addBook = async (req, res) => {
+  let response = {};
   try {
     const newBook = await Book.create({
       title: req.body.title,
@@ -8,23 +9,22 @@ const addBook = async (req) => {
       genre: req.body.genre
     });
 
-    const successResponse = {
+    response = {
       status: 201,
       properties: {
         message: "book successfully added",
         newBook: newBook
       }
     }
-
-    return successResponse
   } catch (error) {
-    return {
+    response = {
       status: 400,
       properties: {
         error: "could not perform operation"
       }
     }
   }
+  res.status(response.status).json(response.properties);
 }
 
 module.exports = addBook;

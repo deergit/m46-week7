@@ -1,21 +1,20 @@
-const Book = require("../modbooks/model");
+const Book = require("../model");
 
-const deleteBook = async (req) => {
+const deleteBook = async (req, res) => {
+  let response = {};
   try {
     const deletedBook = await Book.findOneAndDelete({ title: req.body.title });
 
     if (deletedBook) {
-      const successResponse = {
+      response = {
         status: 201,
         properties: {
           message: "success",
           deletedBook: deletedBook
         }
       }
-
-      return successResponse;
     } else {
-      return {
+      response = {
         status: 404,
         properties: {
           error: "could not find entry"
@@ -23,13 +22,14 @@ const deleteBook = async (req) => {
       }
     }
   } catch {
-    return {
+    response = {
       status: 400,
       properties: {
         error: "could not perform operation"
       }
     }
   }
+  res.status(response.status).json(response.properties);
 }
 
 module.exports = deleteBook;

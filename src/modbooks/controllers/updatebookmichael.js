@@ -1,21 +1,20 @@
-const Book = require("../modbooks/model");
+const Book = require("../model");
 
-const updateBookAuthor = async (req) => {
+const updateBookAuthor = async (req, res) => {
+  let response = {};
   try {
     const updatedBook = await Book.findOneAndUpdate({ title: req.body.title }, { $set: { [req.body.key]: req.body.value }}, { new: true });
 
     if (updatedBook) {
-      const successResponse = {
+      response = {
         status: 201,
         properties: {
           message: "success",
           updatedBook: updatedBook
         }
       }
-
-      return successResponse;
     } else {
-      return {
+      response = {
         status: 404,
         properties: {
           error: "could not find entry"
@@ -23,13 +22,14 @@ const updateBookAuthor = async (req) => {
       }
     }
   } catch (error) {
-    return {
+    response = {
       status: 400,
       properties: {
         error: "could not perform operation"
       }
     }
   }
+  res.status(response.status).json(response.properties);
 }
 
 module.exports = updateBookAuthor;

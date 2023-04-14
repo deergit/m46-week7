@@ -1,6 +1,7 @@
-const Book = require("../modbooks/model");
+const Book = require("../model");
 
-const updateBook = async (req) => {
+const updateBook = async (req, res) => {
+  let response = {};
   try {
     const match = await Book.findOne({ title: req.query.title });
     if (match) {
@@ -14,17 +15,15 @@ const updateBook = async (req) => {
 
       await Book.replaceOne(match, updatedBook, { upsert: false });
 
-      const successResponse = {
+      response = {
         status: 201,
         properties: {
           message: "success",
           updatedBook: updatedBook
         }
       }
-
-      return successResponse;
     } else {
-      return {
+      response = {
         status: 404,
         properties: {
           error: "could not find entry"
@@ -32,13 +31,14 @@ const updateBook = async (req) => {
       }
     }
   } catch {
-    return {
+    response = {
       status: 400,
       properties: {
         error: "could not perform operation"
       }
     }
   }
+  res.status(response.status).json(response.properties);
 }
 
 module.exports = updateBook;
