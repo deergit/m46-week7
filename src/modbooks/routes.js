@@ -5,7 +5,7 @@ const ctrl = require("./controllers/index");
 
 bookRouter.get("/books/getallbooks", ctrl.getallbooks);
 
-bookRouter.get("/books/getbook", ctrl.getbook);
+bookRouter.get("/books/:title", ctrl.getbook);
 
 bookRouter.post("/books/addbook", ctrl.addbook);
 

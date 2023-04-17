@@ -3,7 +3,7 @@ const Book = require("../model");
 const getBook = async (req, res) => {
   let response = {};
   try {
-    const book = await Book.findOne({ title: req.body.title });
+    const book = await Book.findOne({ title: req.params.title });
     
     if (book) {
       response = {
