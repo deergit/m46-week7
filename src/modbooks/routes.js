@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const bookRouter = Router();
 
-const ctrl = require("./controllers/controller");
+const ctrl = require("./controllers/index");
 
 bookRouter.get("/books/getallbooks", ctrl.getallbooks);
 
