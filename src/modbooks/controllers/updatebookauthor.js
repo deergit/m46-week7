@@ -3,7 +3,7 @@ const Book = require("../model");
 const updateBookAuthor = async (req, res) => {
   let response = {};
   try {
-    const updatedBook = await Book.findOneAndUpdate({ title: req.body.title }, { $set: { author: req.body.author }}, { new: true });
+    const updatedBook = await Book.findOneAndUpdate({ title: req.body.title }, { $set: { author: req.body.newAuthor }}, { new: true });
 
     if (updatedBook) {
       response = {
